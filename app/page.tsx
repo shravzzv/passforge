@@ -24,7 +24,9 @@ export default function Page() {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(password)
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(password)
+      }
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
     } catch (err) {
@@ -33,43 +35,53 @@ export default function Page() {
   }
 
   return (
-    <div className='space-y-4'>
-      <h1>{password}</h1>
+    <div className='min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6 gap-8'>
+      <h1 className='font-bold text-3xl md:text-5xl break-all tracking-wide text-center'>
+        {password}
+      </h1>
+
       <button
-        className='text-black bg-amber-600 px-3 py-1 rounded'
         onClick={handleCopy}
+        className='px-6 py-2 cursor-pointer rounded-full font-medium bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl active:scale-95'
       >
-        {copied ? 'Copied' : 'Copy'}
+        {copied ? 'Copied!' : 'Copy'}
       </button>
 
-      <label htmlFor='length'>Length: {length}</label>
-      <input
-        type='range'
-        id='length'
-        min={8}
-        max={24}
-        value={length}
-        onChange={(e) => setLength(Number(e.target.value))}
-      />
+      <div className='w-full max-w-md'>
+        <label htmlFor='length' className='block mb-2 text-sm text-gray-300'>
+          Length: {length}
+        </label>
+        <input
+          type='range'
+          id='length'
+          className='w-full accent-purple-500 cursor-pointer'
+          min={8}
+          max={24}
+          value={length}
+          onChange={(e) => setLength(Number(e.target.value))}
+        />
+      </div>
 
-      <ToggleSwitch
-        id='uppercase'
-        label='Uppercase'
-        checked={useUppercase}
-        onChange={setUseUppercase}
-      />
-      <ToggleSwitch
-        id='numbers'
-        label='Numbers'
-        checked={useNumbers}
-        onChange={setUseNumbers}
-      />
-      <ToggleSwitch
-        id='symbols'
-        label='Symbols'
-        checked={useSymbols}
-        onChange={setUseSymbols}
-      />
+      <div className='flex items-center justify-center gap-6 flex-wrap bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-md'>
+        <ToggleSwitch
+          id='uppercase'
+          label='Uppercase'
+          checked={useUppercase}
+          onChange={setUseUppercase}
+        />
+        <ToggleSwitch
+          id='numbers'
+          label='Numbers'
+          checked={useNumbers}
+          onChange={setUseNumbers}
+        />
+        <ToggleSwitch
+          id='symbols'
+          label='Symbols'
+          checked={useSymbols}
+          onChange={setUseSymbols}
+        />
+      </div>
     </div>
   )
 }
