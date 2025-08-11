@@ -3,6 +3,7 @@
 import generatePassword from '@/utils/generatePassword'
 import { useState, useEffect } from 'react'
 import ToggleSwitch from '@/components/toggle-switch'
+import Image from 'next/image'
 
 export default function Page() {
   const [length, setLength] = useState<number>(12)
@@ -40,13 +41,6 @@ export default function Page() {
         {password}
       </h1>
 
-      <button
-        onClick={handleCopy}
-        className='px-6 py-2 cursor-pointer rounded-full font-medium bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl active:scale-95'
-      >
-        {copied ? 'Copied!' : 'Copy'}
-      </button>
-
       <div className='w-full max-w-md'>
         <label htmlFor='length' className='block mb-2 text-sm text-gray-300'>
           Length: {length}
@@ -82,6 +76,13 @@ export default function Page() {
           onChange={setUseSymbols}
         />
       </div>
+
+      <button
+        onClick={handleCopy}
+        className='px-6 py-2 cursor-pointer rounded-full font-medium bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl active:scale-95'
+      >
+        {copied ? 'Copied!' : 'Copy'}
+      </button>
     </div>
   )
 }
