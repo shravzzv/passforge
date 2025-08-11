@@ -2,6 +2,7 @@
 
 import generatePassword from '@/utils/generatePassword'
 import { useState, useEffect } from 'react'
+import ToggleSwitch from '@/components/toggle-switch'
 
 export default function Page() {
   const [length, setLength] = useState<number>(12)
@@ -25,23 +26,25 @@ export default function Page() {
     try {
       await navigator.clipboard.writeText(password)
       setCopied(true)
-      setTimeout(() => setCopied(false), 1500) // reset after 1.5s
+      setTimeout(() => setCopied(false), 1500)
     } catch (err) {
       console.error('Failed to copy:', err)
     }
   }
 
   return (
-    <div>
-      <h1 className='text-5xl'>{password}</h1>
-      <button className='text-black bg-amber-600' onClick={handleCopy}>
-        {copied ? 'copied' : 'copy'}
+    <div className='space-y-4'>
+      <h1>{password}</h1>
+      <button
+        className='text-black bg-amber-600 px-3 py-1 rounded'
+        onClick={handleCopy}
+      >
+        {copied ? 'Copied' : 'Copy'}
       </button>
 
-      <label htmlFor='length'>Length</label>
+      <label htmlFor='length'>Length: {length}</label>
       <input
         type='range'
-        name='length'
         id='length'
         min={8}
         max={24}
@@ -49,35 +52,24 @@ export default function Page() {
         onChange={(e) => setLength(Number(e.target.value))}
       />
 
-      <div>
-        <label htmlFor='uppercase'>Uppercase</label>
-        <input
-          type='checkbox'
-          id='uppercase'
-          checked={useUppercase}
-          onChange={(e) => setUseUppercase(e.target.checked)}
-        />
-      </div>
-
-      <div>
-        <label htmlFor='numbers'>Numbers</label>
-        <input
-          type='checkbox'
-          id='numbers'
-          checked={useNumbers}
-          onChange={(e) => setUseNumbers(e.target.checked)}
-        />
-      </div>
-
-      <div>
-        <label htmlFor='symbols'>Symbols</label>
-        <input
-          type='checkbox'
-          id='symbols'
-          checked={useSymbols}
-          onChange={(e) => setUseSymbols(e.target.checked)}
-        />
-      </div>
+      <ToggleSwitch
+        id='uppercase'
+        label='Uppercase'
+        checked={useUppercase}
+        onChange={setUseUppercase}
+      />
+      <ToggleSwitch
+        id='numbers'
+        label='Numbers'
+        checked={useNumbers}
+        onChange={setUseNumbers}
+      />
+      <ToggleSwitch
+        id='symbols'
+        label='Symbols'
+        checked={useSymbols}
+        onChange={setUseSymbols}
+      />
     </div>
   )
 }
