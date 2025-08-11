@@ -4,6 +4,7 @@ import generatePassword from '@/utils/generatePassword'
 import { useState, useEffect } from 'react'
 import ToggleSwitch from '@/components/toggle-switch'
 import Image from 'next/image'
+import bmac from './bmac.png'
 
 export default function Page() {
   const [length, setLength] = useState<number>(12)
@@ -83,6 +84,26 @@ export default function Page() {
       >
         {copied ? 'Copied!' : 'Copy'}
       </button>
+
+      <div>
+        <a
+          href='https://buymeacoffee.com/shravzzv'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='group flex items-center gap-2 px-3 py-2 bg-gray-800 rounded-full hover:bg-yellow-500 transition-colors duration-300 shadow-md hover:shadow-lg'
+        >
+          <Image
+            src={bmac}
+            alt='Buy me a coffee'
+            width={24}
+            height={24}
+            className='rounded-full'
+          />
+          <span className='text-sm font-medium text-gray-300 group-hover:text-black transition-colors duration-300'>
+            Buy me a coffee
+          </span>
+        </a>
+      </div>
     </div>
   )
 }
